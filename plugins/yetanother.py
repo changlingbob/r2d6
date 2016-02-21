@@ -1,13 +1,20 @@
+import json
 import os
-import pickle
 
 outputs = []
 crontabs = []
 
-names = ["Wedge Antilles","Garven Dreis","Red Squadron Pilot","Rookie Pilot","Biggs Darklighter","Luke Skywalker","Gray Squadron Pilot",'"Dutch" Vander',"Horton Salm","Gold Squadron Pilot","Academy Pilot","Obsidian Squadron Pilot","Black Squadron Pilot",'"Winged Gundark"','"Night Beast"','"Backstabber"','"Dark Curse"','"Mauler Mithel"','"Howlrunner"',"Maarek Stele","Tempest Squadron Pilot","Storm Squadron Pilot","Darth Vader","Alpha Squadron Pilot","Avenger Squadron Pilot","Saber Squadron Pilot","\"Fel's Wrath\"","Turr Phennir","Soontir Fel","Tycho Celchu","Arvel Crynyd","Green Squadron Pilot","Prototype Pilot","Outer Rim Smuggler","Chewbacca","Lando Calrissian","Han Solo","Kath Scarlet","Boba Fett","Krassis Trelix","Bounty Hunter","Ten Numb","Ibtisam","Dagger Squadron Pilot","Blue Squadron Pilot","Rebel Operative","Roark Garnet","Kyle Katarn","Jan Ors","Scimitar Squadron Pilot","Gamma Squadron Pilot","Captain Jonus","Major Rhymer","Captain Kagi","Colonel Jendon","Captain Yorr","Omicron Group Pilot","Lieutenant Lorrir","Royal Guard Pilot","Tetran Cowall","I messed up this pilot, sorry","Kir Kanos","Carnor Jax","GR-75 Medium Transport","Bandit Squadron Pilot","Tala Squadron Pilot","Lieutenant Blount","Airen Cracken","Delta Squadron Pilot","Onyx Squadron Pilot","Colonel Vessery","Rexler Brath","Knave Squadron Pilot","Blackmoon Squadron Pilot","Etahn A'baht","Corran Horn","Sigma Squadron Pilot","Shadow Squadron Pilot",'"Echo"','"Whisper"',"CR90 Corvette (Fore)","CR90 Corvette (Aft)","Wes Janson","Jek Porkins",'"Hobbie" Klivian',"Tarn Mison","Jake Farrell","Gemmer Sojan","Keyan Farlander","Nera Dantels","CR90 Corvette (Crippled Fore)","CR90 Corvette (Crippled Aft)","Wild Space Fringer","Eaden Vrill",'"Leebo"',"Dash Rendar","Patrol Leader","Captain Oicunn","Commander Kenkirk","Rear Admiral Chiraneau","Prince Xizor","Guri","Black Sun Vigo","Black Sun Enforcer","Serissu","Laetin A'shera","Tansarii Point Veteran","Cartel Spacer","IG-88A","IG-88B","IG-88C","IG-88D","N'Dru Suhlak","Kaa'To Leeachos","Black Sun Soldier","Binayre Pirate","Boba Fett (Scum)","Kath Scarlet (Scum)","Emon Azzameen","Mandalorian Mercenary","Kavil","Drea Renthal","Hired Gun","Syndicate Thug","Dace Bonearm","Palob Godalhi","Torkil Mux","Spice Runner","Commander Alozen","Raider-class Corvette (Fore)","Raider-class Corvette (Aft)","Bossk","Moralo Eval","Latts Razzi","Trandoshan Slaver","Talonbane Cobra","Graz the Hunter","Black Sun Ace","Cartel Marauder","Miranda Doni","Esege Tuketu","Guardian Squadron Pilot","Warden Squadron Pilot",'"Redline"','"Deathrain"','Black Eight Squadron Pilot','Cutlass Squadron Pilot',"Juno Eclipse","Zertik Strom","Lieutenant Colzet","Gozanti-class Cruiser",'"Scourge"','"Youngster"','"Wampa"','"Chaser"',"Hera Syndulla","Kanan Jarrus",'"Chopper"','Lothal ???','Hera Syndulla (Attack Shuttle)','Sabine Wren','Ezra Bridger','"Zeb" Orrelios',"The Inquisitor","Valen Rudor","Baron of ???","Sienar Test Pilot","Zuckuss","4-LOM","Gand ???","Ruth???","Dengar","Tel Trevura","Manaroo","Contracted Scout","Poe Dameron",'"Blue Ace"',"Red Squadron Veteran","Blue Squadron Novice",'"Omega Ace"','"Epsilon Leader"','"Zeta Ace"',"Omega Squadron Pilot","Zeta Squadron Pilot","Epsilon Squadron Pilot","Ello Asty",'"Red Ace"','"Omega Leader"','"Zeta Leader"','"Epsilon Ace"',"Tomax Bren","Gamma Squadron Veteran",'"Dea???"',"Maarek Stele (TIE Defender)","Glaive Squa???","Count???"]
-upgrades = ["Ion Cannon Turret", "Proton Torpedoes", "R2 Astromech", "R2-D2", "R2-F2", "R5-D8", "R5-K6", "R5 Astromech", "Determination", "Swarm Tactics", "Squad Leader", "Expert Handling", "Marksmanship", "Concussion Missiles", "Cluster Missiles", "Daredevil", "Elusiveness", "Homing Missiles", "Push the Limit", "Deadeye", "Expose", "Gunner", "Ion Cannon", "Heavy Laser Cannon", "Seismic Charges", "Mercenary Copilot", "Assault Missiles", "Veteran Instincts", "Proximity Mines", "Weapons Engineer", "Draw Their Fire", "Luke Skywalker", "Nien Nunb", "Chewbacca", "Advanced Proton Torpedoes", "Autoblaster", "Fire-Control System", "Blaster Turret", "Recon Specialist", "Saboteur", "Intelligence Agent", "Proton Bombs", "Adrenaline Rush", "Advanced Sensors", "Sensor Jammer", "Darth Vader", "Rebel Captive", "Flight Instructor", "Navigator", "Opportunist", "Comms Booster", "Slicer Tools", "Shield Projector", "Ion Pulse Missiles", "Wingman", "Decoy", "Outmaneuver", "Predator", "Flechette Torpedoes", "R7 Astromech", "R7-T1", "Tactician", "R2-D2 (Crew)", "C-3PO", "Single Turbolasers", "Quad Laser Cannons", "Tibanna Gas Supplies", "Ionization Reactor", "Engine Booster", "R3-A2", "R2-D6", "Enhanced Scopes", "Chardaan Refit", "Proton Rockets", "Kyle Katarn", "Jan Ors", "Toryn Farr", "R4-D6", "R5-P9", "WED-15 Repair Droid", "Carlist Rieekan", "Jan Dodonna", "Expanded Cargo Hold", "Backup Shield Generator", "EM Emitter", "Frequency Jammer", "Han Solo", "Leia Organa", "Targeting Coordinator", "Raymus Antilles", "Gunnery Team", "Sensor Team", "Engineering Team", "Lando Calrissian", "Mara Jade", "Fleet Officer", "Stay On Target", "Dash Rendar", "Lone Wolf", '"Leebo"', "Ruthlessness", "Intimidation", "Ysanne Isard", "Moff Jerjerrod", "Ion Torpedoes", "Bodyguard", "Calculation", "Accuracy Corrector", "Inertial Dampeners", "Flechette Cannon", '"Mangler" Cannon', "Dead Man's Switch", "Feedback Array", '"Hot Shot" Blaster', "Greedo", "Salvaged Astromech", "Bomb Loadout", '"Genius"', "Unhinged Astromech", "R4-B11", "Autoblaster Turret", "R4 Agromech", "K4 Security Droid", "Outlaw Tech", 'Advanced Targeting Computer', 'Ion Cannon Battery', "Extra Munitions", "Cluster Mines", 'Glitterstim', 'Grand Moff Tarkin', 'Captain Needa', 'Admiral Ozzel', 'Emperor Palpatine', 'Bossk', "Lightning Reflexes", "Twin Laser Turret", "Plasma Torpedoes", "Ion Bombs", "Conner Net", "Bombardier", 'Crack Shot', "Advanced Homing Missiles", 'Agent Kallus', 'XX-23 S-Thread Tracers', "Tractor Beam", "Cloaking Device", 'Shield Technician', 'Weapons Guidance', 'BB-8', 'R5-X3', 'Wired', 'Cool Hand', 'Juke', 'Comm Relay', 'Dual Laser Turret', 'Broadcast Array', 'Rear Admiral Chiraneau', 'Ordnance Experts', 'Docking Clamps', 'Kanan Jarrus', '"Zeb" Orrelios', 'Reinforced Deflectors', 'Dorsal Turret', 'Targeting Astromech', 'Hera Syndulla', 'Ezra Bridger', 'Sabine Wren', '"Chopper"', 'Construction Droid', 'Cluster Bombs', "Adaptability (+1)", "Adaptability (-1)", "Electronic Baffle", "4-LOM", "Zuckuss", 'Rage', "Attanni Mindlink", "Boba Fett", "Dengar", '"Gonk"', "R5-P8"]
-modifications = ["Zero modification","Stealth Device","Shield Upgrade","Engine Upgrade","Anti-Pursuit Lasers","Targeting Computer","Hull Upgrade","Munitions Failsafe","Stygium Particle Accelerator","Advanced Cloaking Device","Combat Retrofit","B-Wing/E2","Countermeasures","Experimental Interface","Tactical Jammer","Autothrusters","Advanced SLAM","Twin Ion Engine Mk. II","Maneuvering Fins","Ion Projector",'Integrated Astromech','Optimized Generators','Automated Protocols','Ordnance Tubes','Long-Range Scanners',"Guidance Chips"]
-title = ["Zero Title","Slave I","Millennium Falcon","Moldy Crow","ST-321","Royal Guard TIE","Dodonna's Pride","A-Wing Test Pilot","b-wing/e","Tantive IV","Bright Hope","Quantum Storm","Dutyfree","Jaina's Light","Outrider","Dauntless","Virago",'"Heavy Scyk" Interceptor (Cannon)','"Heavy Scyk" Interceptor (Torpedo)','"Heavy Scyk" Interceptor (Missile)','IG-2000',"BTL-A4 Y-Wing","Andrasta",'TIE/x1',"Hound's Tooth","Ghost","Phantom","TIE/v1","Mist Hunter","Punishing One",'Assailer','Instigator','Impetuous','TIE/x7','TIE/D','TIE Shuttle','Requiem','Vector','Suppressor']
+FILE="plugins/yetanother.data"
+if os.path.isfile(FILE):
+    with open(FILE) as jsonfile:
+        data = json.load(jsonfile)
+
+names = data["pilotsById"]
+upgrades = data["upgradesById"]
+modifications = data["modificationsById"]
+title = data["titlesById"]
+emojiMap = {"Lambda-Class Shuttle":":lambda:","Firespray-31":":firespray:","A-Wing":":awing:","TIE Advanced":":advanced:","TIE Bomber":":bomber:","B-Wing":":bwing:","YT-1300":":falcon:","TIE Fighter":":fighter:","HWK-290":":hwk:","TIE Interceptor":":interceptor:","X-Wing":":xwing:","Y-Wing":":ywing:"}
+print("loaded data")
 
 def process_api(data):
     print("test")
@@ -24,19 +31,29 @@ def process_message(data):
 
     # Fluff
     if "geordanr" in text:
+        print("parsing")
         output = ""
         for fragment in text.split("&amp;"):
             if not fragment.startswith("d=v4!s!"):
                 continue
             for ship in fragment[7:].split(';'):
                 slots = ship.split(":")
-                output += names[int(slots[0])] + ": "
+                pts = 0
+                if names[slots[0]]["ship"] in emojiMap.keys():
+                    ship = emojiMap[names[slots[0]]["ship"]]
+                else:
+                    ship = "(" + names[slots[0]]["ship"] + ")"
+                output += names[slots[0]]["name"] + " " + ship + ": "
+                pts += names[slots[0]]["points"]
                 for slot in slots[1].split(','):
                     if slot != "-1":
-                        output += upgrades[int(slot)] + ", "
+                        output += upgrades[slot]["name"] + ", "
+                        pts += upgrades[slot]["points"]
                 if slots[2] != "-1":
-                    output += title[int(slots[2])] + ", "
+                    output += title[slots[2]]["name"] + ", "
+                    pts += title[slots[2]]["points"]
                 if slots[3] != "-1":
-                    output += modifications[int(slots[3])] + ", "
-                output = output[:-2] + "\n"
+                    output += modifications[slots[3]]["name"] + ", "
+                    pts += modifications[slots[3]]["points"]
+                output = output[:-2] + " _(" + str(pts) + ")_\n"
         write(channel, output)

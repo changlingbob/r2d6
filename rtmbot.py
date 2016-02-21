@@ -55,14 +55,17 @@ class RtmBot(object):
         for plugin in self.bot_plugins:
             limiter = False
             for output in plugin.do_output():
-                channel = self.slack_client.server.channels.find(output[0])
-                if channel != None and output[1] != None:
-                    if limiter == True:
-                        time.sleep(.1)
-                        limiter = False
-                    message = output[1].encode('ascii','ignore')
-                    channel.send_message("{}".format(message))
-                    limiter = True
+                if output[0] == "api":
+                    plugin.do("process_api", json.loads(self.slack_client.api_call(output[1], **{"post_data": output[2]})))
+                else:
+                    channel = self.slack_client.server.channels.find(output[0])
+                    if channel != None and output[1] != None:
+                        if limiter == True:
+                            time.sleep(.1)
+                            limiter = False
+                        message = output[1].encode('ascii','ignore')
+                        channel.send_message("{}".format(message))
+                        limiter = True
     def crons(self):
         for plugin in self.bot_plugins:
             plugin.do_jobs()
