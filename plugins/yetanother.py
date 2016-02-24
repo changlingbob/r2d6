@@ -50,7 +50,7 @@ def process_message(data):
                         if slot != "-1":
                             output += upgrades[slot]["name"] + ", "
                             pts += upgrades[slot]["points"]
-                else
+                else:
                     if slots[1] != "-1":
                         output += upgrades[slots[1]]["name"] + ", "
                         pts += upgrades[slots[1]]["points"]
