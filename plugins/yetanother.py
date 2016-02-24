@@ -45,20 +45,21 @@ def process_message(data):
                     ship = "(" + names[slots[0]]["ship"] + ")"
                 output += names[slots[0]]["name"] + " " + ship + ": "
                 pts += names[slots[0]]["points"]
+                print(slots)
                 if "," in slots[1]:
                     for slot in slots[1].split(','):
                         if slot != "-1":
                             output += upgrades[slot]["name"] + ", "
                             pts += upgrades[slot]["points"]
-                else:
-                    if slots[1] != "-1":
-                        output += upgrades[slots[1]]["name"] + ", "
-                        pts += upgrades[slots[1]]["points"]
+                elif slots[1] != "-1" and slots[1] != "":
+                    output += upgrades[slots[1]]["name"] + ", "
+                    pts += upgrades[slots[1]]["points"]    
                 if slots[2] != "-1":
                     output += title[slots[2]]["name"] + ", "
                     pts += title[slots[2]]["points"]
                 if slots[3] != "-1":
                     output += modifications[slots[3]]["name"] + ", "
                     pts += modifications[slots[3]]["points"]
+                print("done parsing")
                 output = output[:-2] + " _(" + str(pts) + ")_\n"
         write(channel, output)
