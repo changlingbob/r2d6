@@ -1,3 +1,13 @@
+R2-D6
+=====
+
+A bot for xwingtmg.slack.com, built using the python-rtmbot framework hosted on github by slackhq, and therefore I assume is the official one, the readme for which is maintained below.
+
+I have patched the original bot, allowing a callback into plugins for api calls. It's hacky, but we all love hacks, right? There's also the yetanother.py plugin, with yetanother.data. This allows R2-D6 to parse links to Yet Another X-Wing Builder by geordanr. It doesn't do anything smarter than that.
+
+There's code that does things that you can read. I am bad at readmes.
+
+
 python-rtmbot
 =============
 A Slack bot written in python that connects via the RTM API.
