@@ -20,17 +20,17 @@ def process_message(data):
     #only accept tasks on DM channels
 
     # Fluff
-    if "contextbot" in text:
+    if "r2-d6" in text:
         outputs.append([channel, "that's me!"])
 
     # Topic shenanigans
-    if text.startswith("!topic"):
-        print(channel)
-        outputs.append(["api", "channels.info", {"channel": channel}])
+    # if text.startswith("!topic"):
+    #     print(channel)
+    #     outputs.append(["api", "channels.info", {"channel": channel}])
 
     # Old to-do functionality for reference, mostly
         #do command stuff
-    if text.startswith("todo"):
+    if text.startswith("todo") and channel == "G0N5GBESH":
         if text[5:] == "tasks" or text[4:] == "":
             output = ""
             counter = 1
