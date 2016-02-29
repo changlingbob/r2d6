@@ -1,0 +1,7 @@
+name:  R2-D6
+description: A bot for xwingtmg.slack.com
+avatar: avatar.jpg
+config:
+- name: SLACK_TOKEN
+  friendly_name: Slack Token
+  type: secret
