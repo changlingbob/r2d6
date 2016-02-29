@@ -190,7 +190,7 @@ if __name__ == "__main__":
 
     config = yaml.load(file(args.config or 'rtmbot.conf', 'r'))
     debug = config["DEBUG"]
-    bot = RtmBot(os.environ.get("SLACK_TOKEN"))
+    bot = RtmBot(os.environ.get["SLACK_TOKEN"])
     # bot = RtmBot(config["SLACK_TOKEN"])
     site_plugins = []
     files_currently_downloading = []
