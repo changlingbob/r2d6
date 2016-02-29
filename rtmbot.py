@@ -197,10 +197,10 @@ if __name__ == "__main__":
     files_currently_downloading = []
     job_hash = {}
 
-    if config.has_key("DAEMON"):
-        if config["DAEMON"]:
-            import daemon
-            with daemon.DaemonContext():
-                main_loop()
+    # if config.has_key("DAEMON"):
+    #     if config["DAEMON"]:
+    #         import daemon
+    #         with daemon.DaemonContext():
+    #             main_loop()
     main_loop()
 
