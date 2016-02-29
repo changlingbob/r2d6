@@ -13,6 +13,7 @@ import logging
 from argparse import ArgumentParser
 
 from slackclient import SlackClient
+config = {}
 
 def dbg(debug_string):
     if debug:
