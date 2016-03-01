@@ -34,7 +34,7 @@ def process_message(data):
         print("parsing")
         output = ""
         for fragment in text.split("&amp;"):
-            if not fragment.startswith("d=v4!s!"):
+            if not (fragment.startswith("d=v4!s!") or fragment.startswith("d=v3!s!")):
                 continue
             for ship in fragment[7:].split(';'):
                 slots = ship.split(":")
