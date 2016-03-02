@@ -61,5 +61,5 @@ def process_message(data):
                     output += modifications[slots[3]]["name"] + ", "
                     pts += modifications[slots[3]]["points"]
                 print("done parsing")
-                output = output[:-2] + " _(" + str(pts) + ")_\n"
+                output = output[:-2] + " _(" + str(pts) + ")_\n\n"
         write(channel, output)
